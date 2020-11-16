@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import GoodsList from '../views/GoodsList.vue'
 import TypeList from '../views/TypeList.vue'
+import CreateGoods from '../views/CreateGoods.vue'
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,11 @@ const routes = [
         path: '/goods_list',
         name: 'GoodsList',
         component: GoodsList
+      },
+      {
+        path: '/create_goods',
+        name: 'CreateGoods',
+        component: CreateGoods
       },
       {
         path: '/type_list',
