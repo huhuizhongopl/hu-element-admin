@@ -3,7 +3,7 @@
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>商品</el-breadcrumb-item>
-      <el-breadcrumb-item>商品管理</el-breadcrumb-item>
+      <el-breadcrumb-item>商品编辑</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
 
@@ -40,6 +40,8 @@
                             :auto-upload='false'
                             :http-request='uploadImg'
                              ref='input'
+                             :file-list="fileList"
+                             :on-remove='removeImg'
                             >
                             <i class="el-icon-plus"></i>
                         </el-upload>
@@ -49,9 +51,8 @@
                         <el-switch v-model="form.on_sale"></el-switch>
                     </el-form-item>
                     
-                
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit">发布商品</el-button>
+                        <el-button type="primary" @click="onSubmit">保存商品</el-button>
                         <el-button>取消</el-button>
                     </el-form-item>
                     </el-form>
@@ -76,14 +77,44 @@ export default {
                description:'',
                on_sale:true 
             },
-            formData:new FormData()
+            formData:new FormData(),
+            fileList:[]
         }
     },
-    created(){
+
+    async created(){
+
+        let id =  this.$route.query.id;
+        let {data:res} = await this.$http.post('products/detail',{id});
+        this.form = res;
+        let imgArr = [];
+        this.form.image.forEach(img=>{
+            let obj = {};
+            obj.url = img;
+            obj.is_del = true; 
+            imgArr.push(obj);
+        })
+        this.fileList = imgArr;
         this.getTypes();
+        
     },
+
     methods:{
 
+       async  removeImg(file,fileList){
+
+            if(!file.is_del) return false;
+
+            let index = file.url.lastIndexOf('/');
+            let img = file.url&&file.url.substr(index+1);
+            let id = this.form.id;
+            let {data:res} = await this.$http.post('products/del_img',{id,img});
+           // console.log(res);
+            if(res.meta.status!=200) return this.$message.error('图片删除失败!');
+            this.$message.success(res.meta.msg);
+
+        },
+        
         uploadImg(pic){
            // console.log(pic);
             this.formData.append('pic[]',pic.file);
@@ -109,8 +140,8 @@ export default {
             
             this.$refs.input.submit();
             this.formData.append('form',JSON.stringify(this.form));
-            let {data:res} = await this.$http.post('products/store',this.formData);
-            console.log(res);
+            let {data:res} = await this.$http.post('products/update',this.formData);
+           // console.log(res);
             if(res.meta.status!=200) return this.$message.error('发布失败!');
             this.$message.success(res.meta.msg);
             this.$router.push('/goods_list');

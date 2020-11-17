@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import GoodsList from '../views/GoodsList.vue'
 import TypeList from '../views/TypeList.vue'
 import CreateGoods from '../views/CreateGoods.vue'
+import EditGoods from '../views/EditGoods.vue'
+import GoodsDetail from '../views/GoodsDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +24,16 @@ const routes = [
         path: '/create_goods',
         name: 'CreateGoods',
         component: CreateGoods
+      },
+      {
+        path: '/edit_goods',
+        name: 'EditGoods',
+        component: EditGoods
+      },
+      {
+        path: '/goods_detail',
+        name: 'GoodsDetail',
+        component: GoodsDetail
       },
       {
         path: '/type_list',
