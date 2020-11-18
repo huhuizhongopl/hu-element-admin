@@ -67,13 +67,8 @@ const menus = [
             pid:1,
             path:'goods_list',
             icon:''
-         },
-          {
-            name:'规格管理',
-            pid:1,
-            path:'sku_list',
-            icon:''
-         },
+         }
+         
       ]
    },
    {
@@ -86,6 +81,12 @@ const menus = [
             name:'会员管理',
             pid:2,
             path:'user_list',
+            icon:''
+         },
+         {
+            name:'订单管理',
+            pid:2,
+            path:'order_list',
             icon:''
          },
          {
