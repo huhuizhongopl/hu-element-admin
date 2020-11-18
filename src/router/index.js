@@ -6,6 +6,7 @@ import TypeList from '../views/TypeList.vue'
 import CreateGoods from '../views/CreateGoods.vue'
 import EditGoods from '../views/EditGoods.vue'
 import GoodsDetail from '../views/GoodsDetail.vue'
+import UserList from '../views/UserList.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
         path: '/type_list',
         name: 'TypeList',
         component: TypeList
+      },
+      {
+        path: '/user_list',
+        name: 'UserList',
+        component: UserList
       },
     ]
   },
