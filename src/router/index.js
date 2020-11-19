@@ -7,6 +7,7 @@ import CreateGoods from '../views/CreateGoods.vue'
 import EditGoods from '../views/EditGoods.vue'
 import GoodsDetail from '../views/GoodsDetail.vue'
 import UserList from '../views/UserList.vue'
+import OrderList from '../views/OrderList.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,11 @@ const routes = [
         path: '/user_list',
         name: 'UserList',
         component: UserList
+      },
+      {
+        path: '/order_list',
+        name: 'OrderList',
+        component: OrderList
       },
     ]
   },

@@ -88,13 +88,8 @@ const menus = [
             pid:2,
             path:'order_list',
             icon:''
-         },
-         {
-            name:'团长管理',
-            pid:2,
-            path:'team_leader',
-            icon:''
-         },
+         }
+         
       ]
    }
 ];
