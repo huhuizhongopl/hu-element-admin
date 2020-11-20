@@ -91,6 +91,33 @@ const menus = [
          }
          
       ]
+   },
+   {
+      name:'权限',
+      id:3,
+      pid:0,
+      path:'',
+      children:[
+         {
+            name:'用户管理',
+            pid:3,
+            path:'admin_list',
+            icon:''
+         },
+         {
+            name:'权限管理',
+            pid:3,
+            path:'permission_list',
+            icon:''
+         },
+         {
+            name:'角色管理',
+            pid:3,
+            path:'role_list',
+            icon:''
+         },
+         
+      ]
    }
 ];
 
