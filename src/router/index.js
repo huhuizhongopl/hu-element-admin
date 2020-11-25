@@ -9,6 +9,9 @@ import GoodsDetail from '../views/GoodsDetail.vue'
 import UserList from '../views/UserList.vue'
 import OrderList from '../views/OrderList.vue'
 import AdminList from '../views/AdminList.vue'
+import PermissionList from '../views/PermissionList.vue'
+import RoleList from '../views/RoleList.vue'
+
 
 Vue.use(VueRouter)
 
@@ -57,7 +60,20 @@ const routes = [
         path: '/admin_list',
         name: 'AdminList',
         component: AdminList
-      }
+
+      },
+      {
+        path: '/permission_list',
+        name: 'PermissionList',
+        component: PermissionList
+      },
+      {
+        path: '/role_list',
+        name: 'RoleList',
+        component: RoleList
+      },
+      
+
     ]
   },
   {

@@ -105,7 +105,7 @@ export default {
             let size = this.size;
             let page = this.page;
             let words = this.words;
-            let {data:res} = await this.$http.post('user/list',{size,words,page});
+            let {data:res} = await this.$http.post('users/list',{size,words,page});
             console.log(res);
             this.users = res.users.data;
             this.users.forEach(user=>{
@@ -127,7 +127,7 @@ export default {
         async change(user){
 
             let {id,status} = user;
-            let {data:res} = await this.$http.post('user/update',{id,status});
+            let {data:res} = await this.$http.post('users/update',{id,status});
             console.log(res);
             if(res.status!=200) return this.$message.error('更新失败!');
             this.$message.success(res.msg);
