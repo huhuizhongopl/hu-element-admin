@@ -2,9 +2,13 @@
   <div class="home">
      <el-container>
       <el-header>
-         <div class="logo">
-            <img :src='logo' />美菜商城后台管理
-         </div>
+        <div class="logo">
+          <img :src='logo' />美菜商城后台管理
+        </div>
+        <div class='user_wrap'>
+          <span>{{user.username}}</span>
+          <img :src='user.icon' class='icon'/>
+        </div>
       </el-header>
       <el-container>
         <el-aside width="200px">
@@ -45,104 +49,51 @@
 
 <script>
 // @ is an alias to /src
-import Logo from '@/assets/logo.png'
-
-const menus = [
-   {
-      name:'商品',
-      icon:'',
-      pid:0,
-      id:1,
-      path:'',
-      children:[
-         
-         {
-            name:'分类管理',
-            pid:1,
-            path:'type_list',
-            icon:''
-         },
-         {
-            name:'商品管理',
-            pid:1,
-            path:'goods_list',
-            icon:''
-         }
-         
-      ]
-   },
-   {
-      name:'会员',
-      id:2,
-      pid:0,
-      path:'',
-      children:[
-         {
-            name:'会员管理',
-            pid:2,
-            path:'user_list',
-            icon:''
-         },
-         {
-            name:'订单管理',
-            pid:2,
-            path:'order_list',
-            icon:''
-         }
-         
-      ]
-   },
-   {
-      name:'权限',
-      id:3,
-      pid:0,
-      path:'',
-      children:[
-         {
-            name:'用户管理',
-            pid:3,
-            path:'admin_list',
-            icon:''
-         },
-         {
-            name:'权限管理',
-            pid:3,
-            path:'permission_list',
-            icon:''
-         },
-         {
-            name:'角色管理',
-            pid:3,
-            path:'role_list',
-            icon:''
-         },
-         
-      ]
-   }
-];
+import Logo from '@/assets/logo.png';
+import Bus from './Bus.js';
 
 export default {
   name: 'Home',
   data(){
      return {
         isCollapse:false,
-        menuList:menus,
+        menuList:[],
         activeIndex:"type_list",
-        logo:Logo
+        logo:Logo,
+        user:{}
      }
   },
-  components: {
-   
-  }
+  
+  created(){
+     this.getMenus();
+     Bus.$on('iconChange',(user)=>{
+       console.log('home');
+       console.log(user);
+       this.user = user;
+     })
+  },
+
+  methods: {
+     async getMenus(){
+         let {data:res} = await this.$http.post('permission/menus');
+         console.log('home');
+         console.log(res);
+         this.menuList = res.data;
+     }
+    
+  },
+
 }
 </script>
 
 
 <style lang="less" scoped>
-.home{
-  height: 100vh;
-  display: flex;
-}
+
+  .home{
+    height: 100vh;
+    display: flex;
+  }
+
  .el-header{
       display:flex;
       justify-content:space-between;
@@ -153,7 +104,7 @@ export default {
   .el-aside{
     background: #393c41;
   }
-
+  
   .logo{
      height: 60px;
      display: flex;
@@ -166,4 +117,23 @@ export default {
        margin-right:10px;
      }
   }
+
+  .icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+  }
+
+  .user_wrap{
+    display:flex;
+    width:150px;
+    height:60px;
+    align-items:center;
+    justify-content:flex-end;
+    span{
+      padding-right:10px;
+      color:#bfbfbf;
+    }
+  }
+
 </style>

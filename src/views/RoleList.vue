@@ -58,19 +58,22 @@
             title="权限列表"
             :visible.sync="pmsShow"
             width="30%"
+            @close='closePmsDialog'
             >
             <el-tree
+            ref='treeRef'
             :data='pmsList'
             :props="props"
             show-checkbox
             node-key="id"
+            default-expand-all
             :default-checked-keys="defkeys"
             >
             </el-tree>
 
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                <el-button type="primary" @click="savePms">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -87,39 +90,84 @@ export default {
             props: {
                 label: 'name',
                 children: 'children'
-            }
+            },
+            acRole:null
         }
     },
     created(){
        this.getRoles();
        this.getPmsList();
+       this.getMenus();
     },
     methods:{
+
+        // 项目初始化;
+        initData(){
+            this.defkeys = [];
+            this.getRoles();
+            this.getPmsList();
+        },
+
+        async getMenus(){
+            let {data:res} = this.$http.post('permission/menus');
+            console.log(res);
+        },
+
+       async savePms(){
+
+           let permissions = [
+                 ...this.$refs.treeRef.getCheckedKeys(),
+                 ...this.$refs.treeRef.getHalfCheckedKeys()
+                 ];
+           let id =  this.acRole.id;  
+            
+           let { data:res } = await this.$http.post('role/permission',{id,permissions});
+           console.log(res);
+           if(res.status!=200) return this.$message.error('权限更新失败!');
+           this.$message.success('权限更成功!');
+           this.pmsShow = false;
+           this.initData();
+           
+       },
+
         editRole(){},
         delRole(){},
-        permission(role){
+
+        closePmsDialog(){
+            console.log('close');
             this.defkeys=[];
+        },
+
+        permission(role){
+
+            this.acRole = role;
+            this.defkeys=[];
+            this.pmsList = [...this.pmsList];
             this.getDefKeys(role);
             this.pmsShow = true;
+
         },
+
         removePmsById(){},
         
-        getDefKeys(role){
+        getDefKeys(node){
 
-            if(!role.children) return false;
-         
-            if(role.children.length>0){
-                role.children.forEach(pms=>{
-                    this.defkeys.push(pms.id);
-                })
-            }
-
+            // 0 undefined null "" false NaN 其他都是true
+           
+            // 没有孩子，叶节点，把id推送到defKeys里; []  true
+            if(!node.children){ return this.defkeys.push(node.id) };
+            
+            node.children.forEach(item=>{
+                this.getDefKeys(item);
+            })
+            
         },
-
+        
         async getRoles(){
             let {data:res} = await this.$http.get('role/list');
-            console.log(res);
+            
             this.roles = res.data;
+            //console.log(res);
         },
         async getPmsList(){
             let {data:res} = await this.$http.post('permission/list',{type:'tree'});

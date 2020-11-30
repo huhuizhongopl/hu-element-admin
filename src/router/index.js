@@ -11,6 +11,9 @@ import OrderList from '../views/OrderList.vue'
 import AdminList from '../views/AdminList.vue'
 import PermissionList from '../views/PermissionList.vue'
 import RoleList from '../views/RoleList.vue'
+import Login from '../views/Login.vue'
+import UserUploadIcon from '../views/UserUploadIcon.vue'
+import Default from '../views/Default.vue'
 
 Vue.use(VueRouter)
 
@@ -20,6 +23,11 @@ const routes = [
     name: 'Home',
     component: Home,
     children:[
+      {
+        path: '/default',
+        name: 'default',
+        component: Default
+      },
       {
         path: '/goods_list',
         name: 'GoodsList',
@@ -70,8 +78,18 @@ const routes = [
         name: 'RoleList',
         component: RoleList
       },
+      {
+        path: '/user_upload_icon',
+        name: 'UserUploadIcon',
+        component: UserUploadIcon
+      },
       
     ]
+  },
+  {
+    path:'/login',
+    name:'login',
+    component:Login
   },
   {
     path: '/about',
