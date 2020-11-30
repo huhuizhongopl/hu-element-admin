@@ -15,6 +15,7 @@ import Login from '../views/Login.vue'
 import UserUploadIcon from '../views/UserUploadIcon.vue'
 import Default from '../views/Default.vue'
 
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -67,6 +68,7 @@ const routes = [
         path: '/admin_list',
         name: 'AdminList',
         component: AdminList
+
       },
       {
         path: '/permission_list',
@@ -84,6 +86,7 @@ const routes = [
         component: UserUploadIcon
       },
       
+
     ]
   },
   {

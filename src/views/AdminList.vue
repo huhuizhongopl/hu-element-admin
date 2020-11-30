@@ -1,4 +1,5 @@
 <template>
+
   <div class="about">
      <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -127,9 +128,11 @@ export default {
         let {data:res} = await this.$http.post('user/update',user);
         console.log(res);
      }
+
    }
 }
 </script>
+
 
 <style lang="less" scoped>
 .el-card{
@@ -150,3 +153,4 @@ export default {
   padding-bottom:20px;
 }
 </style>
+

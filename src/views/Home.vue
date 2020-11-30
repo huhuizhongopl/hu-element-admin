@@ -49,8 +49,11 @@
 
 <script>
 // @ is an alias to /src
+
 import Logo from '@/assets/logo.png';
 import Bus from './Bus.js';
+//import Logo from '@/assets/logo.png'
+
 
 export default {
   name: 'Home',
