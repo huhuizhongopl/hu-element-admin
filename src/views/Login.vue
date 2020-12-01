@@ -33,6 +33,7 @@ export default {
             let { data:res } = await this.$http.post('user/login',this.form);
             console.log(res);
             if(res.meta.status==200){
+                sessionStorage.removeItem('acIndex');
                 sessionStorage.setItem('token',res.data.api_token);
                 sessionStorage.setItem('user', JSON.stringify(res.data));
                 this.$router.push('/default');

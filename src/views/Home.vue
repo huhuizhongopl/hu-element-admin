@@ -50,12 +50,9 @@
 </template>
 
 <script>
-// @ is an alias to /src
 
 import Logo from '@/assets/logo.png';
 import Bus from './Bus.js';
-//import Logo from '@/assets/logo.png'
-
 
 export default {
   name: 'Home',
@@ -78,7 +75,7 @@ export default {
      this.user = user ?  user:{};
      this.activeIndex = sessionStorage.getItem('acIndex');
   },
-
+  
   methods: {
 
     selectMenu(index){
@@ -91,12 +88,12 @@ export default {
        this.$router.push('/login');
     },
     
-     async getMenus(){
-         let {data:res} = await this.$http.post('permission/menus');
-         console.log('home');
-         console.log(res);
-         this.menuList = res.data;
-     }
+    async getMenus(){
+        let {data:res} = await this.$http.post('permission/menus');
+        console.log('home');
+        console.log(res);
+        this.menuList = res.data;
+    }
     
   },
 
