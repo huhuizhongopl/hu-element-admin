@@ -108,4 +108,21 @@ const router = new VueRouter({
   routes
 })
 
+
+// 全局路由钩子函数;
+router.beforeEach((to,from,next)=>{
+   
+   let token = sessionStorage.getItem('token');
+   if(to.path=='/login') {
+      if(token){
+         return next('/default');
+      }else{
+         return next();
+      }
+   }
+   if(!token) return next('/login');
+   next();
+   
+})
+
 export default router

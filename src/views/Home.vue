@@ -8,6 +8,7 @@
         <div class='user_wrap'>
           <span>{{user.username}}</span>
           <img :src='user.icon' class='icon'/>
+          <el-button type='primary' size='mini' @click='logout'>退出</el-button>
         </div>
       </el-header>
       <el-container>
@@ -15,6 +16,7 @@
            <el-menu
               :collapse-transition="false"	
               :collapse="isCollapse"
+              @select= "selectMenu"
               router
               unique-opened
               :default-active='activeIndex'
@@ -61,7 +63,7 @@ export default {
      return {
         isCollapse:false,
         menuList:[],
-        activeIndex:"type_list",
+        activeIndex:"",
         logo:Logo,
         user:{}
      }
@@ -70,13 +72,25 @@ export default {
   created(){
      this.getMenus();
      Bus.$on('iconChange',(user)=>{
-       console.log('home');
-       console.log(user);
        this.user = user;
      })
+     let user = JSON.parse(sessionStorage.getItem('user'));
+     this.user = user ?  user:{};
+     this.activeIndex = sessionStorage.getItem('acIndex');
   },
 
   methods: {
+
+    selectMenu(index){
+      sessionStorage.setItem('acIndex',index);
+    },
+     
+    logout(){
+       sessionStorage.removeItem('user');
+       sessionStorage.removeItem('token');
+       this.$router.push('/login');
+    },
+    
      async getMenus(){
          let {data:res} = await this.$http.post('permission/menus');
          console.log('home');
@@ -136,6 +150,9 @@ export default {
     span{
       padding-right:10px;
       color:#bfbfbf;
+    }
+    img{
+      margin-right:10px;
     }
   }
 

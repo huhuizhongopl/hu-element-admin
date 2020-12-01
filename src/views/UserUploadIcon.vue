@@ -44,11 +44,15 @@ export default {
         },
 
         async onSubmit(){
+
             this.$refs.input.submit();
             let { data:res } = await this.$http.post('user/upload_icon',this.formData);
             console.log(res);
-            this.$refs.input.clearFiles();
+            
             Bus.$emit('iconChange',res.meta.user);
+            sessionStorage.setItem('user',JSON.stringify(res.meta.user));
+            this.$refs.input.clearFiles();
+            
         }
 
     }
