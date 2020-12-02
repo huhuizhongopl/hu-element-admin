@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import GoodsList from '../views/GoodsList.vue'
-import TypeList from '../views/TypeList.vue'
-import CreateGoods from '../views/CreateGoods.vue'
+
 import EditGoods from '../views/EditGoods.vue'
 import GoodsDetail from '../views/GoodsDetail.vue'
 import UserList from '../views/UserList.vue'
@@ -15,6 +13,9 @@ import Login from '../views/Login.vue'
 import UserUploadIcon from '../views/UserUploadIcon.vue'
 import Default from '../views/Default.vue'
 
+//import CreateGoods from '../views/CreateGoods.vue'
+//import GoodsList from '../views/GoodsList.vue'
+//import TypeList from '../views/TypeList.vue'
 
 Vue.use(VueRouter)
 
@@ -32,12 +33,13 @@ const routes = [
       {
         path: '/goods_list',
         name: 'GoodsList',
-        component: GoodsList
+        component: ()=>import( '../views/GoodsList.vue')
+        
       },
       {
         path: '/create_goods',
         name: 'CreateGoods',
-        component: CreateGoods
+        component: ()=>import( '../views/CreateGoods.vue')
       },
       {
         path: '/edit_goods',
@@ -52,7 +54,7 @@ const routes = [
       {
         path: '/type_list',
         name: 'TypeList',
-        component: TypeList
+        component: ()=>import('../views/TypeList.vue')
       },
       {
         path: '/user_list',
@@ -109,7 +111,7 @@ const router = new VueRouter({
 })
 
 
-// 全局路由钩子函数;
+//全局路由钩子函数;
 router.beforeEach((to,from,next)=>{
    
    let token = sessionStorage.getItem('token');

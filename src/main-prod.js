@@ -1,12 +1,11 @@
-import Vue from 'vue'
+//import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios';
+
+axios.defaults.baseURL = 'http://www.lvjiayuan.net/public/index.php/api/';
 Vue.prototype.$http = axios;
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI);
 
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -33,3 +32,7 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
+
+console.log('main-prod.js');
+
+
